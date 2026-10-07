@@ -1,0 +1,6 @@
+{
+  "name": "PulseQC",
+  "description": "Near Real-Time Customer Feedback Quality Control Platform for Google Play reviews, featuring AI-assisted triage, priority scoring, operational bottleneck monitoring, and research evaluation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

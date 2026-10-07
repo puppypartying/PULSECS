@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  pulseqc-web:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - APP_NAME=Super App Polri
+      - APP_PACKAGE_NAME=superapps.polri.presisi.presisi
+      - DATABASE_URL=sqlite:///./pulseqc.db
+      - GEMINI_MODEL=gemini-3.8-flash
+      - PRIVACY_MASK_AUTHORS=true
+    volumes:
+      - pulseqc-data:/app/data
+
+  pulseqc-worker:
+    build: .
+    command: ["python3", "worker.py"]
+    environment:
+      - APP_NAME=Super App Polri
+      - APP_PACKAGE_NAME=superapps.polri.presisi.presisi
+      - DATABASE_URL=sqlite:///./pulseqc.db
+      - SYNC_POLLING_INTERVAL_SECONDS=300
+    volumes:
+      - pulseqc-data:/app/data
+
+volumes:
+  pulseqc-data:
