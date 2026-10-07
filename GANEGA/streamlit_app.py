@@ -5,6 +5,14 @@ Jalankan:  streamlit run streamlit_app.py
 """
 
 import json
+import os
+import sys
+
+# Kunci lokasi DB ke folder file ini, biar nggak tergantung dari folder mana app dijalankan
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, BASE_DIR)
+os.environ.setdefault("DATABASE_URL", "sqlite:///" + os.path.join(BASE_DIR, "pulseqc.db"))
+
 import pandas as pd
 import streamlit as st
 
@@ -51,6 +59,10 @@ if st.sidebar.button("🔄 Refresh data"):
     st.rerun()
 
 df = query(REVIEWS_SQL)
+
+# Info diagnosa: kelihatan DB mana yang kebaca dan isinya berapa
+from pulseqc.database import get_db_path
+st.sidebar.caption(f"DB: `{os.path.basename(get_db_path())}` · {len(df)} review")
 
 # Privacy masking tetap dihormati
 if Config.PRIVACY_MASK_AUTHORS and not df.empty:
